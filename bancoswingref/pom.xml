@@ -11,4 +11,11 @@
         <exec.mainClass>com.mycompany.bancoswingref.Bancoswingref</exec.mainClass>
     </properties>
     <name>banco-swing-ref</name>
+    <dependencies>
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE240</version>
+        </dependency>
+    </dependencies>
 </project>
