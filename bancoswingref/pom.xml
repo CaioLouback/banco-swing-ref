@@ -8,7 +8,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
-        <exec.mainClass>com.mycompany.bancoswingref.Bancoswingref</exec.mainClass>
+        <exec.mainClass>com.mycompany.main.Main</exec.mainClass>
     </properties>
     <name>banco-swing-ref</name>
     <dependencies>

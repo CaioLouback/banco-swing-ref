@@ -1,8 +1,18 @@
 package com.mycompany.main;
 
+import cadastro.Cliente;
+
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Cliente user = new Cliente("Caio", "senha123", "123456789", 100.00);
+        
+        System.out.println("Nome: " + user.getNome());
+        System.out.println("cpf:  " + user.getCPF());
+        System.out.println("Saldo: " + user.getSaldo());
+        user.setSaldo(250.00);
+        System.out.println("Saldo: " + user.getSaldo());
+        
+        
     }
 }
