@@ -1,4 +1,4 @@
-package cadastro;
+package user;
 
 public class Caixa extends Usuarios{
     

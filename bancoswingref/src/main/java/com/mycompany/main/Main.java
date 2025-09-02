@@ -1,6 +1,6 @@
 package com.mycompany.main;
 
-import cadastro.Cliente;
+import user.Cliente;
 
 public class Main {
 

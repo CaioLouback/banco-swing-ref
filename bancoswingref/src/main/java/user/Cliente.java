@@ -1,4 +1,4 @@
-package cadastro;
+package user;
 
 public class Cliente extends Usuarios {
     private double saldo;

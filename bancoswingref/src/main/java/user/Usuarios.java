@@ -1,4 +1,4 @@
-package cadastro;
+package user;
 
 public abstract class Usuarios {
     private String nome, senha, cpf;
