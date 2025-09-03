@@ -68,8 +68,15 @@ public class CadastramentoService {
         if(!vazio){
             boolean senhaConfirmada = confirmacaoSenha(senha, confSenha);
             if(senhaConfirmada){
-                String pass = new String(senha.getPassword());
-                cadastrar(nome, cpf, pass, tipo);
+                Formatacao numCpf = new Formatacao(cpf);
+                
+                if (!numCpf.isCPF()) {
+                    JOptionPane.showMessageDialog(null, "CPF inválido! Favor inserir um CPF válido!");
+                    
+                } else {
+                    String pass = new String(senha.getPassword());
+                    cadastrar(nome, cpf, pass, tipo);
+                }
             } else{
                 JOptionPane.showMessageDialog(null, "Sua confirmação de senha está incorreta!", "Erro", JOptionPane.ERROR_MESSAGE);
             }

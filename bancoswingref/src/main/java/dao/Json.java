@@ -2,12 +2,17 @@ package dao;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import user.Usuarios;
 import java.io.*;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import user.Caixa;
+import user.Cliente;
+import user.Gerente;
 
 
 
@@ -41,12 +46,39 @@ public class Json {
         if(!arq.exists())
             return new ArrayList<>();
         
-        try(FileReader ler = new FileReader(CAMINHO_ARQUIVO)){
-            Type listType = new TypeToken<List<Usuarios>>() {}.getType();
-            return gson.fromJson(ler, listType);
-        }catch (IOException e){
-            return new ArrayList<>();
+        List<Usuarios> listaUsuarios = new ArrayList<>();
+
+    try (FileReader ler = new FileReader(CAMINHO_ARQUIVO)) {
+        JsonArray jsonArray = JsonParser.parseReader(ler).getAsJsonArray();
+
+        for (JsonElement elem : jsonArray) {
+            JsonObject obj = elem.getAsJsonObject();
+            String tipo = obj.get("tipo").getAsString();
+
+            Usuarios usuario = null;
+            switch (tipo) {
+                case "Cliente":
+                    usuario = gson.fromJson(obj, Cliente.class);
+                    break;
+                case "Gerente":
+                    usuario = gson.fromJson(obj, Gerente.class);
+                    break;
+                case "Caixa":
+                    usuario = gson.fromJson(obj, Caixa.class);
+                    break;
+                default:
+                    System.err.println("Tipo desconhecido: " + tipo);
+            }
+
+            if (usuario != null) {
+                listaUsuarios.add(usuario);
+            }
         }
+    } catch (IOException e) {
+        System.err.println("ERROR ao ler o arquivo!" );
+    }
+
+    return listaUsuarios;
         
     } 
 }
