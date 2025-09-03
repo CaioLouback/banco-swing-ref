@@ -16,16 +16,22 @@ public class Json {
     private static final String CAMINHO_ARQUIVO = PASTA_BANCO + "/usuarios.json";
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     
+    private Json(){};
     
     public static void salvarUsuarios(Usuarios user){
         List<Usuarios> listaUsuarios = lerUsuarios();
         listaUsuarios.add(user);
         
+        File pasta = new File(PASTA_BANCO);
+        if (!pasta.exists()) {
+            pasta.mkdirs(); 
+        }
+        
         try(FileWriter escrever = new FileWriter(CAMINHO_ARQUIVO)){
             gson.toJson(listaUsuarios, escrever);
             System.out.println("Usuarios salvos com sucesso!");
         } catch (IOException e){
-            System.err.println("Erro ao salvar usuário: " + e.getMessage()); 
+            System.err.println("Erro ao salvar usuario: " + e.getMessage()); 
         }   
     }
     

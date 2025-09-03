@@ -6,6 +6,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import user.Usuarios;
+import view.Cadastramento;
+import view.Login;
 
 public class LoginService {
     
@@ -55,7 +57,13 @@ public class LoginService {
     }
     
     
-    
+    public static void telaCadastramento(){
+        Cadastramento cad = new Cadastramento();
+        Login login = new Login();
+        cad.setLocationRelativeTo(null);
+        cad.setVisible(true);
+        login.dispose();
+    }
     
     
     
