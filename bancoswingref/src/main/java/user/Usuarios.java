@@ -1,12 +1,17 @@
 package user;
 
 public abstract class Usuarios {
-    private String nome, senha, cpf;
+    private String nome, senha, cpf, tipo;
     
-    public Usuarios(String nome, String senha, String cpf){
+    public Usuarios(String nome, String senha, String cpf, String tipo){
         this.nome = nome;
         this.senha = senha;
         this.cpf = cpf;
+        this.tipo = tipo;
+    }
+    
+    public String getTipo(){
+        return tipo;
     }
     
     public String getNome(){
@@ -21,7 +26,7 @@ public abstract class Usuarios {
         return senha;
     }
     
-    
-    
-    
+    public boolean verificarSenha(String senha){
+        return senha == getSenha();
+    }
 }

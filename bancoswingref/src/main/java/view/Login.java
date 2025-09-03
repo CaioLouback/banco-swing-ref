@@ -1,10 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import utils.LoginService;
+import static utils.LoginService.mostrarSenha;
 
 /**
  *
@@ -40,7 +39,7 @@ public class Login extends javax.swing.JFrame {
         txtCPF = new javax.swing.JFormattedTextField();
         lblLogin = new javax.swing.JLabel();
         lblSenha = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        caixaSenha = new javax.swing.JCheckBox();
         btnEntrar = new java.awt.Button();
         btnCadastrar = new java.awt.Button();
 
@@ -64,10 +63,10 @@ public class Login extends javax.swing.JFrame {
 
         lblSenha.setText("Senha:");
 
-        jCheckBox1.setText("Mostrar Senha");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        caixaSenha.setText("Mostrar Senha");
+        caixaSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                caixaSenhaActionPerformed(evt);
             }
         });
 
@@ -78,7 +77,7 @@ public class Login extends javax.swing.JFrame {
             .addGroup(painelLoginLayout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox1)
+                    .addComponent(caixaSenha)
                     .addComponent(lblSenha)
                     .addComponent(lblLogin)
                     .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -98,11 +97,21 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(caixaSenha)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
         btnEntrar.setLabel("Entrar");
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntrarActionPerformed(evt);
+            }
+        });
+        btnEntrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEntrarKeyPressed(evt);
+            }
+        });
 
         btnCadastrar.setLabel("Cadastrar");
 
@@ -160,10 +169,20 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    private void caixaSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaSenhaActionPerformed
+       mostrarSenha(caixaSenha, txtSenha);
+    }//GEN-LAST:event_caixaSenhaActionPerformed
 
+    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+        LoginService.autenticadorLogin(txtCPF.getText(), new String(txtSenha.getPassword()));
+    }//GEN-LAST:event_btnEntrarActionPerformed
+
+    private void btnEntrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEntrarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LoginService.autenticadorLogin(txtCPF.getText(), new String(txtSenha.getPassword()));
+        }
+    }//GEN-LAST:event_btnEntrarKeyPressed
+    
     /**
      * @param args the command line arguments
      */
@@ -204,7 +223,7 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button btnCadastrar;
     private java.awt.Button btnEntrar;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox caixaSenha;
     private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblSenha;
