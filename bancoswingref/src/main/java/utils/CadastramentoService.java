@@ -2,6 +2,7 @@ package utils;
 
 import dao.Json;
 import java.util.Arrays;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import user.Caixa;
@@ -83,6 +84,15 @@ public class CadastramentoService {
         }
     }
     
+    public static void mostrarSenha(JCheckBox check, JPasswordField senha, JPasswordField confSenha){
+        if(check.isSelected()){
+           senha.setEchoChar((char)0);
+           confSenha.setEchoChar((char)0);
+        }else {
+           senha.setEchoChar('*');
+           confSenha.setEchoChar('*');
+        }    
+    }
     
     
     

@@ -6,6 +6,7 @@ package view;
 
 import java.awt.Toolkit;
 import static utils.CadastramentoService.menu;
+import static utils.CadastramentoService.mostrarSenha;
 
 /**
  *
@@ -51,7 +52,7 @@ public class Cadastramento extends javax.swing.JFrame {
         btnRealizarCadastro = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         painel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -61,7 +62,7 @@ public class Cadastramento extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("CADASTRO");
 
-        box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Caixa", "Gerente" }));
+        box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente" }));
 
         try {
             txtCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -81,6 +82,11 @@ public class Cadastramento extends javax.swing.JFrame {
 
         cboxMostrarSenha.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         cboxMostrarSenha.setText("Mostrar Senha");
+        cboxMostrarSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboxMostrarSenhaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelLayout = new javax.swing.GroupLayout(painel);
         painel.setLayout(painelLayout);
@@ -155,6 +161,11 @@ public class Cadastramento extends javax.swing.JFrame {
 
         btnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/voltar.png"))); // NOI18N
         btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,6 +201,17 @@ public class Cadastramento extends javax.swing.JFrame {
     private void btnRealizarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarCadastroActionPerformed
         menu(txtNome.getText(),txtCPF.getText(), txtSenha,txtConfSenha, box.getSelectedItem().toString()); 
     }//GEN-LAST:event_btnRealizarCadastroActionPerformed
+
+    private void cboxMostrarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMostrarSenhaActionPerformed
+        mostrarSenha(cboxMostrarSenha, txtSenha, txtConfSenha);
+    }//GEN-LAST:event_cboxMostrarSenhaActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        Login login = new Login();
+        login.setLocationRelativeTo(null); 
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments

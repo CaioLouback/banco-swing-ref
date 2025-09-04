@@ -2,7 +2,7 @@ package view;
 
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import utils.LoginService;
+import static utils.LoginService.menu;
 import static utils.LoginService.mostrarSenha;
 import static utils.LoginService.telaCadastramento;
 
@@ -175,11 +175,13 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_caixaSenhaActionPerformed
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        LoginService.autenticadorLogin(txtCPF.getText(), new String(txtSenha.getPassword()));
+        menu(txtCPF.getText(), new String(txtSenha.getPassword()));
+        this.dispose();
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         telaCadastramento();
+        this.dispose();
     }//GEN-LAST:event_btnCadastrarActionPerformed
     
     /**
