@@ -4,8 +4,11 @@ import static dao.Json.lerUsuarios;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JSlider;
+import javax.swing.JTextPane;
 import user.Cliente;
 import user.Usuarios;
 import utils.ClienteService;
@@ -32,7 +35,6 @@ public class ClienteController extends ClienteService{
             }      
         }
     }
-    
     
     public static void mostrarSaldoCliente(JLabel saldo, JCheckBox checkBoxSaldo){
         if (checkBoxSaldo.isSelected()) {
@@ -62,5 +64,50 @@ public class ClienteController extends ClienteService{
         
         
     }
-     
+    
+    public static void termos(JSlider slider, JTextPane painel){
+        int valor = slider.getValue();  
+
+        String termoAceite = """
+        <html>
+        <p>Eu, <b>%s</b>, inscrito no CPF<b>%s</b>, declaro que li e estou ciente das condições do empréstimo solicitado 
+        junto ao <b>Banco Louback</b>, aceitando integralmente os seguintes termos:</p>
+        <h3>1. Valor e Condições do Empréstimo</h3>
+        <ul>
+            <li>Valor solicitado: <b>R$ %d</b></li>  
+            <li>Taxa de juros: <b>3%% ao mês</b></li>  
+        </ul>
+        <h3>2. Condições Gerais</h3>
+        <ul>
+            <li>O empréstimo está sujeito à análise de crédito e demais políticas do banco.</li>
+            <li>O pagamento das parcelas deverá ser efetuado nas datas acordadas, sob pena de incidência de juros e multa por atraso.</li>
+            <li>Em caso de inadimplência, poderão ser tomadas medidas administrativas e judiciais cabíveis para a cobrança da dívida.</li>
+            <li>O cliente autoriza o banco a debitar automaticamente as parcelas em conta corrente, caso aplicável.</li>
+            <li>O cliente declara que os dados fornecidos são verídicos e atualizados.</li>
+        </ul>
+        <h3>3. Proteção de Dados</h3>
+        <p>O cliente autoriza o tratamento de seus dados para fins de análise e concessão do crédito, conforme a legislação vigente.</p>
+        <br/>
+        
+        </html>
+    """;
+        String nomeCliente = cliente.getNome();
+        String cpfCliente = cliente.getCPF();
+        
+        String termoFormatado = String.format(termoAceite, nomeCliente, cpfCliente, valor);
+
+        painel.setContentType("text/html"); 
+        painel.setText(termoFormatado);
+    }
+    
+    public  static void setValor(JLabel lbl, JSlider slider, JTextPane painel){
+        lbl.setText(String.valueOf(slider.getValue()));
+        termos(slider, painel);
+    }
+    
+    public static void setTermos(JButton btnSolicitar, JCheckBox checkAceito){
+        btnSolicitar.setEnabled(checkAceito.isSelected());
+    }
+    
+    
 }
