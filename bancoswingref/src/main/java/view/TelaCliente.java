@@ -4,17 +4,25 @@
  */
 package view;
 
+import static controller.ClienteController.mostrarInfoCliente;
+import static controller.ClienteController.mostrarSaldoCliente;
+
+
 /**
  *
  * @author caiol
  */
 public class TelaCliente extends javax.swing.JFrame {
-
     /**
      * Creates new form TelaCliente
      */
     public TelaCliente() {
         initComponents();
+    }
+    
+    public TelaCliente(String cpf){
+        initComponents();
+        mostrarInfoCliente(cpf, lblNomeCliente, lblSaldo);
     }
 
     /**
@@ -26,21 +34,141 @@ public class TelaCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        painel = new javax.swing.JPanel();
+        lblTitulo = new javax.swing.JLabel();
+        lblNomeCliente = new javax.swing.JLabel();
+        lblLogo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        lblTituloSaldo = new javax.swing.JLabel();
+        lblSaldo = new javax.swing.JLabel();
+        checkBoxSaldo = new javax.swing.JCheckBox();
+        btnTransferencia = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        painel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        lblTitulo.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
+        lblTitulo.setText("BEM-VINDO: ");
+
+        lblNomeCliente.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblNomeCliente.setText("Nome do Cliente");
+
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logobanco.png"))); // NOI18N
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sair.png"))); // NOI18N
+        jLabel1.setText("Deslogar");
+
+        javax.swing.GroupLayout painelLayout = new javax.swing.GroupLayout(painel);
+        painel.setLayout(painelLayout);
+        painelLayout.setHorizontalGroup(
+            painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(17, 17, 17))
+            .addGroup(painelLayout.createSequentialGroup()
+                .addGap(86, 86, 86)
+                .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblLogo)
+                    .addGroup(painelLayout.createSequentialGroup()
+                        .addComponent(lblTitulo)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblNomeCliente)))
+                .addContainerGap(95, Short.MAX_VALUE))
+        );
+        painelLayout.setVerticalGroup(
+            painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitulo)
+                    .addComponent(lblNomeCliente))
+                .addGap(18, 18, 18)
+                .addComponent(lblLogo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        lblTituloSaldo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblTituloSaldo.setText("Saldo: ");
+
+        lblSaldo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblSaldo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSaldo.setText("0");
+
+        checkBoxSaldo.setText("Mostrar Saldo");
+        checkBoxSaldo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxSaldoActionPerformed(evt);
+            }
+        });
+
+        btnTransferencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/transferir.png"))); // NOI18N
+        btnTransferencia.setText("Transferência");
+
+        jMenu1.setText("Solicitações");
+
+        jMenuItem1.setText("Solicitação de Crédito");
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Extrato Bancário");
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(painel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(46, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(checkBoxSaldo)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblTituloSaldo)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnTransferencia)
+                                .addGap(101, 101, 101))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(painel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTituloSaldo)
+                    .addComponent(lblSaldo)
+                    .addComponent(btnTransferencia))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkBoxSaldo)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void checkBoxSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxSaldoActionPerformed
+        mostrarSaldoCliente(lblSaldo, checkBoxSaldo);
+    }//GEN-LAST:event_checkBoxSaldoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +206,18 @@ public class TelaCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnTransferencia;
+    private javax.swing.JCheckBox checkBoxSaldo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JLabel lblLogo;
+    private javax.swing.JLabel lblNomeCliente;
+    private javax.swing.JLabel lblSaldo;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblTituloSaldo;
+    private javax.swing.JPanel painel;
     // End of variables declaration//GEN-END:variables
 }

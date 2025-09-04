@@ -21,7 +21,7 @@ public class LoginController extends LoginService{
             if(!loginValidado){
                 JOptionPane.showMessageDialog(null, "CPF ou senha incorretos. Tente novamente!", "Atenção!", JOptionPane.WARNING_MESSAGE);
             } else {
-                telaCliente();
+                telaCliente(cpf);
             }     
         }       
     }
@@ -39,8 +39,8 @@ public class LoginController extends LoginService{
         cad.setVisible(true);
     }
     
-    private static void telaCliente(){
-        TelaCliente tela = new TelaCliente();
+    private static void telaCliente(String cpf){
+        TelaCliente tela = new TelaCliente(cpf);
         tela.setLocationRelativeTo(null);
         tela.setVisible(true);
     }

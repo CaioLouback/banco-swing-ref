@@ -11,10 +11,9 @@ public class LoginService {
     protected static boolean autenticadorLogin(String cpfDigitado, String senhaDigitada){ 
         boolean loginValido = false;
         List<Usuarios> listaUsuarios = lerUsuarios();
-        for(Usuarios var : listaUsuarios) // Percorrendo os usuários cadastrados no JSON
-            System.out.println("Usuários no JSON: " + var.getNome() + " " + var.getCPF()  + " Tipo: " + var.getTipo());
-     
+       
         for(Usuarios var : listaUsuarios){ // Valiando o login e senha
+            System.out.println("Usuários no JSON: " + var.getNome() + " " + var.getCPF()  + " Tipo: " + var.getTipo());
             if(var.getCPF().equals(cpfDigitado) && var.verificarSenha(senhaDigitada)){
                 loginValido = true;
                 System.out.println("Logou!");
