@@ -53,6 +53,7 @@ public class Cadastramento extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cadastro");
         setResizable(false);
 
         painel.setBorder(javax.swing.BorderFactory.createEtchedBorder());

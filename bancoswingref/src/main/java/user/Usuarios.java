@@ -27,6 +27,6 @@ public abstract class Usuarios {
     }
     
     public boolean verificarSenha(String senha){
-        return senha == getSenha();
+        return senha.equals(getSenha());
     }
 }

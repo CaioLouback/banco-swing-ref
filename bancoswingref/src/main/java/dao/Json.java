@@ -48,37 +48,37 @@ public class Json {
         
         List<Usuarios> listaUsuarios = new ArrayList<>();
 
-    try (FileReader ler = new FileReader(CAMINHO_ARQUIVO)) {
-        JsonArray jsonArray = JsonParser.parseReader(ler).getAsJsonArray();
+        try (FileReader ler = new FileReader(CAMINHO_ARQUIVO)) {
+            JsonArray jsonArray = JsonParser.parseReader(ler).getAsJsonArray();
 
-        for (JsonElement elem : jsonArray) {
-            JsonObject obj = elem.getAsJsonObject();
-            String tipo = obj.get("tipo").getAsString();
+            for (JsonElement elem : jsonArray) {
+                JsonObject obj = elem.getAsJsonObject();
+                String tipo = obj.get("tipo").getAsString();
 
-            Usuarios usuario = null;
-            switch (tipo) {
-                case "Cliente":
-                    usuario = gson.fromJson(obj, Cliente.class);
-                    break;
-                case "Gerente":
-                    usuario = gson.fromJson(obj, Gerente.class);
-                    break;
-                case "Caixa":
-                    usuario = gson.fromJson(obj, Caixa.class);
-                    break;
-                default:
-                    System.err.println("Tipo desconhecido: " + tipo);
+                Usuarios usuario = null;
+                switch (tipo) {
+                    case "Cliente":
+                        usuario = gson.fromJson(obj, Cliente.class);
+                        break;
+                    case "Gerente":
+                        usuario = gson.fromJson(obj, Gerente.class);
+                        break;
+                    case "Caixa":
+                        usuario = gson.fromJson(obj, Caixa.class);
+                        break;
+                    default:
+                        System.err.println("Tipo desconhecido: " + tipo);
+                }
+
+                if (usuario != null) {
+                    listaUsuarios.add(usuario);
+                }
             }
-
-            if (usuario != null) {
-                listaUsuarios.add(usuario);
-            }
+        } catch (IOException e) {
+            System.err.println("ERROR ao ler o arquivo!");
         }
-    } catch (IOException e) {
-        System.err.println("ERROR ao ler o arquivo!" );
-    }
 
-    return listaUsuarios;
-        
-    } 
+        return listaUsuarios;
+
+    }
 }

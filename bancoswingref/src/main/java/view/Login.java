@@ -1,10 +1,12 @@
 package view;
 
+import static controller.LoginController.controladorLogin;
+import static controller.LoginController.mostrarSenha;
+import static controller.LoginController.telaCadastramento;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import static utils.LoginService.menu;
-import static utils.LoginService.mostrarSenha;
-import static utils.LoginService.telaCadastramento;
+
+
+
 
 /**
  *
@@ -53,6 +55,12 @@ public class Login extends javax.swing.JFrame {
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logobanco.png"))); // NOI18N
 
         painelLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyPressed(evt);
+            }
+        });
 
         try {
             txtCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -115,6 +123,11 @@ public class Login extends javax.swing.JFrame {
                 btnEntrarActionPerformed(evt);
             }
         });
+        btnEntrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEntrarKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelLayout = new javax.swing.GroupLayout(painel);
         painel.setLayout(painelLayout);
@@ -175,7 +188,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_caixaSenhaActionPerformed
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        menu(txtCPF.getText(), new String(txtSenha.getPassword()));
+        controladorLogin(txtCPF.getText(), new String(txtSenha.getPassword()));
         this.dispose();
     }//GEN-LAST:event_btnEntrarActionPerformed
 
@@ -183,6 +196,15 @@ public class Login extends javax.swing.JFrame {
         telaCadastramento();
         this.dispose();
     }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnEntrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEntrarKeyPressed
+        controladorLogin(txtCPF.getText(), new String(txtSenha.getPassword()));
+        this.dispose();
+    }//GEN-LAST:event_btnEntrarKeyPressed
+
+    private void txtSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyPressed
+        
+    }//GEN-LAST:event_txtSenhaKeyPressed
     
     /**
      * @param args the command line arguments
