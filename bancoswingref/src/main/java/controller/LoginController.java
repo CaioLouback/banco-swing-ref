@@ -15,11 +15,11 @@ public class LoginController extends LoginService{
         boolean loginValidado = false;
         
         if(vazio){
-            JOptionPane.showMessageDialog(null,"Há informações em branco. Favor inserir um cadastro válido!", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Há informações em branco. Favor inserir um cadastro válido!", "Atenção!", JOptionPane.WARNING_MESSAGE);
         } else {
             loginValidado = autenticadorLogin(cpf, senha);
             if(!loginValidado){
-                JOptionPane.showMessageDialog(null, "CPF ou senha incorretos. Tente novamente!", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "CPF ou senha incorretos. Tente novamente!", "Atenção!", JOptionPane.WARNING_MESSAGE);
             } else {
                 telaCliente();
             }     

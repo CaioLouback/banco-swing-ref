@@ -4,8 +4,8 @@
  */
 package view;
 
+import static controller.CadastramentoController.controladorCadastramento;
 import java.awt.Toolkit;
-import static utils.CadastramentoService.menu;
 import static utils.CadastramentoService.mostrarSenha;
 
 /**
@@ -200,7 +200,7 @@ public class Cadastramento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRealizarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarCadastroActionPerformed
-        menu(txtNome.getText(),txtCPF.getText(), txtSenha,txtConfSenha, box.getSelectedItem().toString()); 
+        controladorCadastramento(txtNome.getText(),txtCPF.getText(), txtSenha,txtConfSenha, box.getSelectedItem().toString()); 
     }//GEN-LAST:event_btnRealizarCadastroActionPerformed
 
     private void cboxMostrarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMostrarSenhaActionPerformed
