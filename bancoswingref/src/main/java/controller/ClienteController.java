@@ -9,10 +9,14 @@ import javax.swing.JLabel;
 import user.Cliente;
 import user.Usuarios;
 import utils.ClienteService;
+import view.Credito;
+import view.Login;
+import view.TelaCliente;
 
 
 public class ClienteController extends ClienteService{
     private static Cliente cliente;
+    private static TelaCliente tela;
     
     public static void mostrarInfoCliente(String cpf, JLabel nomeCliente, JLabel saldo){
         List<Usuarios> listaUsuarios = lerUsuarios();
@@ -40,9 +44,23 @@ public class ClienteController extends ClienteService{
         }
     }
     
+    public static void deslogar(){
+        Login login = new Login();
+        login.setVisible(true);
+        login.setLocationRelativeTo(null);
+    }
     
+    public static void instaciaTelaCliente(TelaCliente tela1){
+        tela = tela1;
+    }
     
-    
-    
-    
+    public static void telaCredito(){
+        //String cpf = cliente.getCPF();
+        Credito telaCredito = new Credito(tela, true);
+        telaCredito.setLocationRelativeTo(tela);
+        telaCredito.setVisible(true);
+        
+        
+    }
+     
 }

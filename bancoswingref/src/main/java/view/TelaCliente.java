@@ -4,8 +4,12 @@
  */
 package view;
 
+import controller.ClienteController;
+import static controller.ClienteController.deslogar;
 import static controller.ClienteController.mostrarInfoCliente;
 import static controller.ClienteController.mostrarSaldoCliente;
+import static controller.ClienteController.telaCredito;
+import java.awt.Toolkit;
 
 
 /**
@@ -18,13 +22,19 @@ public class TelaCliente extends javax.swing.JFrame {
      */
     public TelaCliente() {
         initComponents();
+        setIcon();
     }
     
     public TelaCliente(String cpf){
         initComponents();
+        setIcon();
         mostrarInfoCliente(cpf, lblNomeCliente, lblSaldo);
     }
-
+    
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png")));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,7 +48,7 @@ public class TelaCliente extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
         lblNomeCliente = new javax.swing.JLabel();
         lblLogo = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblExit = new javax.swing.JLabel();
         lblTituloSaldo = new javax.swing.JLabel();
         lblSaldo = new javax.swing.JLabel();
         checkBoxSaldo = new javax.swing.JCheckBox();
@@ -49,6 +59,7 @@ public class TelaCliente extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cliente");
 
         painel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -60,8 +71,13 @@ public class TelaCliente extends javax.swing.JFrame {
 
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logobanco.png"))); // NOI18N
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sair.png"))); // NOI18N
-        jLabel1.setText("Deslogar");
+        lblExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sair.png"))); // NOI18N
+        lblExit.setText("Deslogar");
+        lblExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblExitMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelLayout = new javax.swing.GroupLayout(painel);
         painel.setLayout(painelLayout);
@@ -69,7 +85,7 @@ public class TelaCliente extends javax.swing.JFrame {
             painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(lblExit)
                 .addGap(17, 17, 17))
             .addGroup(painelLayout.createSequentialGroup()
                 .addGap(86, 86, 86)
@@ -91,7 +107,7 @@ public class TelaCliente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lblLogo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
+                .addComponent(lblExit)
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -115,6 +131,16 @@ public class TelaCliente extends javax.swing.JFrame {
         jMenu1.setText("Solicitações");
 
         jMenuItem1.setText("Solicitação de Crédito");
+        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem1MouseClicked(evt);
+            }
+        });
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Extrato Bancário");
@@ -170,6 +196,19 @@ public class TelaCliente extends javax.swing.JFrame {
         mostrarSaldoCliente(lblSaldo, checkBoxSaldo);
     }//GEN-LAST:event_checkBoxSaldoActionPerformed
 
+    private void lblExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseClicked
+        deslogar();
+        this.dispose();
+    }//GEN-LAST:event_lblExitMouseClicked
+
+    private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
+        
+    }//GEN-LAST:event_jMenuItem1MouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        telaCredito();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -208,11 +247,11 @@ public class TelaCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTransferencia;
     private javax.swing.JCheckBox checkBoxSaldo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JLabel lblExit;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblNomeCliente;
     private javax.swing.JLabel lblSaldo;

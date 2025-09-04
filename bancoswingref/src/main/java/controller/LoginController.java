@@ -1,5 +1,6 @@
 package controller;
 
+import static controller.ClienteController.instaciaTelaCliente;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -43,5 +44,6 @@ public class LoginController extends LoginService{
         TelaCliente tela = new TelaCliente(cpf);
         tela.setLocationRelativeTo(null);
         tela.setVisible(true);
+        instaciaTelaCliente(tela);
     }
 }
