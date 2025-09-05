@@ -73,7 +73,7 @@ public class CaixaController extends CaixaService{
                         JOptionPane.showMessageDialog(null, "Saldo insuficiente!", "Atenção!", JOptionPane.WARNING_MESSAGE);
                     } else {
                         telaConfirmacao(tela, cpf_origem, valor, cpf_destino);
-                        JOptionPane.showMessageDialog(null, "Transferência realizada com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+                        //JOptionPane.showMessageDialog(null, "Transferência realizada com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }   
@@ -96,13 +96,17 @@ public class CaixaController extends CaixaService{
     }
             
     public static void confirmar(JFormattedTextField cpf, JPasswordField senha, double valor, String cpfD){
-        cliente_origem = retornaCliente(cpf.getText());
-        cliente_destino = retornaCliente(cpfD);
-        boolean verifica = cliente_origem.verificarSenha(String.valueOf(senha.getPassword()));
-        
+        boolean verifica = false;
+        if (cliente_origem == null){
+            JOptionPane.showMessageDialog(null,"Login ou senha estão incorretos!", "Atenção!", JOptionPane.WARNING_MESSAGE);
+        } else {
+            cliente_origem = retornaCliente(cpf.getText());
+            cliente_destino = retornaCliente(cpfD);
+            verifica = cliente_origem.verificarSenha(String.valueOf(senha.getPassword()));
+        }
         if(senha.getPassword().length == 0){
             JOptionPane.showMessageDialog(null,"Insira a sua senha!", "Atenção!", JOptionPane.WARNING_MESSAGE);   
-        }else if( cliente_origem == null || !cpf.getText().equals(cliente_origem.getCPF()) || !verifica){
+        }else if(!cpf.getText().equals(cliente_origem.getCPF()) || !verifica){
             JOptionPane.showMessageDialog(null,"Login ou senha estão incorretos!", "Atenção!", JOptionPane.WARNING_MESSAGE);
             return;
         } else if (cpf.getText().equals(cliente_origem.getCPF()) && verifica == true){
