@@ -4,11 +4,11 @@
  */
 package view;
 
-import controller.ClienteController;
 import static controller.ClienteController.deslogar;
 import static controller.ClienteController.mostrarInfoCliente;
 import static controller.ClienteController.mostrarSaldoCliente;
 import static controller.ClienteController.telaCredito;
+import static controller.ClienteController.telaExtrato;
 import java.awt.Toolkit;
 
 
@@ -29,6 +29,7 @@ public class TelaCliente extends javax.swing.JFrame {
         initComponents();
         setIcon();
         mostrarInfoCliente(cpf, lblNomeCliente, lblSaldo);
+        mostrarSaldoCliente(lblSaldo, checkBoxSaldo);
     }
     
     private void setIcon() {
@@ -55,8 +56,8 @@ public class TelaCliente extends javax.swing.JFrame {
         btnTransferencia = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menuCredito = new javax.swing.JMenuItem();
+        menuExtrato = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cliente");
@@ -130,21 +131,26 @@ public class TelaCliente extends javax.swing.JFrame {
 
         jMenu1.setText("Solicitações");
 
-        jMenuItem1.setText("Solicitação de Crédito");
-        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+        menuCredito.setText("Solicitação de Crédito");
+        menuCredito.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuItem1MouseClicked(evt);
+                menuCreditoMouseClicked(evt);
             }
         });
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuCredito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuCreditoActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(menuCredito);
 
-        jMenuItem2.setText("Extrato Bancário");
-        jMenu1.add(jMenuItem2);
+        menuExtrato.setText("Extrato Bancário");
+        menuExtrato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExtratoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuExtrato);
 
         jMenuBar1.add(jMenu1);
 
@@ -201,13 +207,17 @@ public class TelaCliente extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_lblExitMouseClicked
 
-    private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
+    private void menuCreditoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCreditoMouseClicked
         
-    }//GEN-LAST:event_jMenuItem1MouseClicked
+    }//GEN-LAST:event_menuCreditoMouseClicked
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menuCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCreditoActionPerformed
         telaCredito();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuCreditoActionPerformed
+
+    private void menuExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtratoActionPerformed
+        telaExtrato();
+    }//GEN-LAST:event_menuExtratoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -249,14 +259,14 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkBoxSaldo;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JLabel lblExit;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblNomeCliente;
     private javax.swing.JLabel lblSaldo;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTituloSaldo;
+    private javax.swing.JMenuItem menuCredito;
+    private javax.swing.JMenuItem menuExtrato;
     private javax.swing.JPanel painel;
     // End of variables declaration//GEN-END:variables
 }

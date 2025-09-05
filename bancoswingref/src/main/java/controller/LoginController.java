@@ -1,12 +1,11 @@
 package controller;
 
-import static controller.ClienteController.instaciaTelaCliente;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import utils.LoginService;
 import view.Cadastramento;
-import view.TelaCliente;
+
 
 
 public class LoginController extends LoginService{
@@ -22,7 +21,7 @@ public class LoginController extends LoginService{
             if(!loginValidado){
                 JOptionPane.showMessageDialog(null, "CPF ou senha incorretos. Tente novamente!", "Atenção!", JOptionPane.WARNING_MESSAGE);
             } else {
-                telaCliente(cpf);
+                logar(cpf);
             }     
         }       
     }
@@ -40,10 +39,8 @@ public class LoginController extends LoginService{
         cad.setVisible(true);
     }
     
-    private static void telaCliente(String cpf){
-        TelaCliente tela = new TelaCliente(cpf);
-        tela.setLocationRelativeTo(null);
-        tela.setVisible(true);
-        instaciaTelaCliente(tela);
-    }
+    
+    
+    
+    
 }

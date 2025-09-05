@@ -1,5 +1,7 @@
 package controller;
 
+import dao.Json;
+import static dao.Json.credito;
 import static dao.Json.lerUsuarios;
 import java.text.NumberFormat;
 import java.util.List;
@@ -7,12 +9,15 @@ import java.util.Locale;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSlider;
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import user.Cliente;
 import user.Usuarios;
 import utils.ClienteService;
 import view.Credito;
+import view.Extrato;
 import view.Login;
 import view.TelaCliente;
 
@@ -60,9 +65,19 @@ public class ClienteController extends ClienteService{
         //String cpf = cliente.getCPF();
         Credito telaCredito = new Credito(tela, true);
         telaCredito.setLocationRelativeTo(tela);
-        telaCredito.setVisible(true);
-        
-        
+        telaCredito.setVisible(true);   
+    }
+    
+    public static void telaExtrato(){
+        Extrato telaExtrato = new Extrato(tela,true);
+        telaExtrato.setLocationRelativeTo(tela);
+        telaExtrato.setVisible(true);
+    }
+    
+    public static void mostrarExtrato(JTextArea area){
+        String extrato = Json.obterExtrato(cliente.getCPF());
+        System.out.println("Extrato carregado: " + extrato);  
+        area.setText(extrato);
     }
     
     public static void termos(JSlider slider, JTextPane painel){
@@ -109,5 +124,13 @@ public class ClienteController extends ClienteService{
         btnSolicitar.setEnabled(checkAceito.isSelected());
     }
     
+    public static void solicitarCredito(JSlider slider){
+        double valor = slider.getValue(); 
+        boolean resultado = credito(cliente, valor);
+        if(resultado)
+            JOptionPane.showMessageDialog(null,"Sua solicitação foi enviada com sucesso! Basta aguardar a liberação pelo gerente. ","Agora é só aguardar!", JOptionPane.INFORMATION_MESSAGE);
+        else
+            JOptionPane.showMessageDialog(null,"ERRO!","ERROR!!", JOptionPane.ERROR_MESSAGE);
+    }
     
 }
