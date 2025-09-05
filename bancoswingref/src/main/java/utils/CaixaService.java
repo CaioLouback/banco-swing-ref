@@ -9,16 +9,16 @@ import user.Usuarios;
 
 public class CaixaService{
     
-    protected static boolean transferir(Cliente cliente_origem, Cliente cliente_destino, double valor){
+    protected static void transferir(Cliente cliente_origem, Cliente cliente_destino, double valor){
         double saldoOrigem = cliente_origem.getSaldo();
         saldoOrigem -= valor;
+        cliente_origem.setSaldo(saldoOrigem);
         double saldoDestino = cliente_destino.getSaldo();
         saldoDestino += valor;
-        
+        cliente_destino.setSaldo(saldoDestino);
         atualizarSaldo(cliente_origem);
         atualizarSaldo(cliente_destino);
         
-        return true;
     }
     
     protected static Cliente retornaCliente(String cpf) {
@@ -51,11 +51,6 @@ public class CaixaService{
             return false;
     }
         
-    
-    
-    
-    
-    
     protected static double formatarValor(String valorTexto) {
         if (valorTexto == null || valorTexto.isEmpty()) {
             return 0.0;
@@ -67,4 +62,13 @@ public class CaixaService{
             return -1;
         }
     }
+    
+    protected static boolean deposito(Cliente cliente, double valor){
+        double saldo = cliente.getSaldo();
+        saldo += valor;
+        cliente.setSaldo(saldo);
+        atualizarSaldo(cliente);
+        return true;
+    }
+   
 }

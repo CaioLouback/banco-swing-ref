@@ -4,6 +4,7 @@
  */
 package view;
 
+import static controller.CaixaController.abrirTelaDeposito;
 import static controller.CaixaController.abrirTelaTransferencia;
 import static controller.CaixaController.nomeCaixa;
 import static controller.ClienteController.deslogar;
@@ -93,6 +94,11 @@ public class TelaCaixa extends javax.swing.JFrame {
 
         btnDeposito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/deposito.png"))); // NOI18N
         btnDeposito.setText("Depósito");
+        btnDeposito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDepositoActionPerformed(evt);
+            }
+        });
 
         painelLogo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -196,6 +202,10 @@ public class TelaCaixa extends javax.swing.JFrame {
         deslogar();
         this.dispose();
     }//GEN-LAST:event_lblDeslogarMouseClicked
+
+    private void btnDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositoActionPerformed
+        abrirTelaDeposito();
+    }//GEN-LAST:event_btnDepositoActionPerformed
 
     /**
      * @param args the command line arguments
