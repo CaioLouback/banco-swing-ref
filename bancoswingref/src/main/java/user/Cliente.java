@@ -13,8 +13,15 @@ public class Cliente extends Usuarios {
         return saldo;
     }
     
-    protected void setSaldo(double saldo){
+    public void setSaldo(double saldo){
         this.saldo = saldo;
     }
     
+    public double getValorCredito(){
+        return valorCredito;
+    }
+    
+    public void setValorCredito(double valor){
+        valorCredito = valor;
+    }
 }

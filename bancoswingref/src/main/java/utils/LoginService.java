@@ -60,7 +60,7 @@ public class LoginService {
     }
     
     
-    protected static boolean verificarVazio(String cpfDigitado, String senhaDigitada){
+    public static boolean verificarVazio(String cpfDigitado, String senhaDigitada){
         if(cpfDigitado.trim().isEmpty() || senhaDigitada.length() == 0){
             return true;
         }

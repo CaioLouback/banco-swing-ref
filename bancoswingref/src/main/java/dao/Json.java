@@ -10,12 +10,10 @@ import com.google.gson.reflect.TypeToken;
 import user.Usuarios;
 import java.io.*;
 import java.lang.reflect.Type;
-import java.text.NumberFormat;
+
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import user.Caixa;
 import user.Cliente;
 import user.Gerente;
@@ -88,85 +86,112 @@ public class Json {
         return listaUsuarios;
     }
     
+    public static void atualizarSaldo(Cliente clienteAtualizado) {
+        List<Usuarios> listaUsuarios = lerUsuarios();
+
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            Usuarios u = listaUsuarios.get(i);
+
+            // Identifica o usuário pelo CPF
+            if (u.getCPF().equals(clienteAtualizado.getCPF()) && u instanceof Cliente) {
+                ((Cliente) u).setSaldo(clienteAtualizado.getSaldo()); // atualiza apenas o saldo
+                System.out.println("SALDO ATT!");
+                break; // sai do loop assim que encontrar
+            }
+        }
+
+        // Salva a lista atualizada no JSON
+        File pasta = new File(PASTA_BANCO);
+        if (!pasta.exists()) {
+            pasta.mkdirs();
+        }
+
+        try (FileWriter escrever = new FileWriter(CAMINHO_ARQUIVO)) {
+            gson.toJson(listaUsuarios, escrever);
+            System.out.println("Saldo atualizado com sucesso!");
+        } catch (IOException e) {
+            System.err.println("Erro ao atualizar saldo: " + e.getMessage());
+        }
+    }
+    
     public static boolean credito(Cliente cliente, double valor) {
         File arq = new File(CAMINHO_CREDITO);
-        
-        List<Map<String, Object>> listaCreditos = new ArrayList<>();
 
-        // Se já existir, carrega o JSON atual
-        if (arq.exists()) {
-            try (FileReader reader = new FileReader(arq)) {
-                Type listType = new TypeToken<List<Map<String, Object>>>() {
-                }.getType();
-                listaCreditos = gson.fromJson(reader, listType);
-                if (listaCreditos == null) {
-                    listaCreditos = new ArrayList<>();
-                }
+        // se não existir, cria um arquivo vazio
+        if (!arq.exists()) {
+            try {
+                arq.createNewFile();
             } catch (IOException e) {
                 return false;
             }
         }
 
-        // Criar o registro de crédito
-        Map<String, Object> registro = new HashMap<>();
-        registro.put("nome", cliente.getNome());
-        registro.put("cpf", cliente.getCPF());
-        registro.put("valor", valor);
+        // cliente recebe o valor do crédito
+        cliente.setValorCredito(valor);
 
-        listaCreditos.add(registro);
+        try (FileReader reader = new FileReader(arq)) {
+            Type listType = new TypeToken<List<Cliente>>() {
+            }.getType();
+            List<Cliente> lista = gson.fromJson(reader, listType);
 
-        // Gravar no arquivo
-        try (FileWriter writer = new FileWriter(arq)) {
-            gson.toJson(listaCreditos, writer);
+            if (lista == null) {
+                lista = new ArrayList<>();
+            }
+
+            lista.add(cliente);
+
+            try (FileWriter writer = new FileWriter(arq)) {
+                gson.toJson(lista, writer);
+            }
             return true;
+
         } catch (IOException e) {
             return false;
         }
-    }
+}
             
-    public static List<Map<String, Object>> lerExtrato(String cpf) {
-        File file = new File(CAMINHO_EXTRATO);
-        if (!file.exists()) {
+    public static List<Cliente> lerExtrato(String cpf) {
+        File arq = new File(CAMINHO_CREDITO);
+
+        if (!arq.exists()) {
             return new ArrayList<>();
         }
 
-        try (FileReader reader = new FileReader(CAMINHO_EXTRATO)) {
-            Type type = new TypeToken<Map<String, List<Map<String, Object>>>>() {
+        try (FileReader reader = new FileReader(arq)) {
+            Type listType = new TypeToken<List<Cliente>>() {
             }.getType();
-            Map<String, List<Map<String, Object>>> extratos = gson.fromJson(reader, type);
-            return extratos.getOrDefault(cpf, new ArrayList<>());
+            List<Cliente> lista = gson.fromJson(reader, listType);
+
+            if (lista == null) {
+                lista = new ArrayList<>();
+            }
+            return lista;
+
         } catch (IOException e) {
             return new ArrayList<>();
         }
-    }
+}
     
     public static String obterExtrato(String cpf) {
-        List<Map<String, Object>> extrato = lerExtrato(cpf);
-        NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance(new Locale("pt", "BR")); // Formato monetário BR
+        List<Cliente> lista = lerExtrato(cpf);
+
+        if (lista.isEmpty()) {
+            return "Nenhuma movimentação encontrada.";
+        }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Extrato Bancário:\n\n");
+        sb.append("=== Extrato de Créditos ===\n\n");
 
-        if (extrato.isEmpty()) {
-            sb.append("Nenhuma movimentação encontrada.");
-        } else {
-            for (Map<String, Object> movimentacao : extrato) {
-                String tipo = (String) movimentacao.get("tipo");
-                double valor = (double) movimentacao.get("valor");
-                sb.append(String.format("%s: %s\n", tipo, formatoMoeda.format(valor)));
-            }
+        for (Cliente c : lista) {
+            sb.append("Nome: ").append(c.getNome()).append("\n");
+            sb.append("CPF: ").append(c.getCPF()).append("\n");
+            sb.append("Valor do Crédito: R$ ").append(c.getValorCredito()).append("\n");
+            sb.append("-----------------------------\n");
         }
 
         return sb.toString();
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+ 
     
 }
