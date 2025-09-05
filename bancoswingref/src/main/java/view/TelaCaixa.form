@@ -140,6 +140,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Deslogar"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblDeslogarMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnTransferencia">
           <Properties>
@@ -148,6 +151,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Transfer&#xea;ncia"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTransferenciaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnSaque">
           <Properties>

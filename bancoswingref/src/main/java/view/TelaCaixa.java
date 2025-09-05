@@ -4,7 +4,9 @@
  */
 package view;
 
+import static controller.CaixaController.abrirTelaTransferencia;
 import static controller.CaixaController.nomeCaixa;
+import static controller.ClienteController.deslogar;
 import java.awt.Toolkit;
 
 /**
@@ -72,9 +74,19 @@ public class TelaCaixa extends javax.swing.JFrame {
 
         lblDeslogar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sair.png"))); // NOI18N
         lblDeslogar.setText("Deslogar");
+        lblDeslogar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDeslogarMouseClicked(evt);
+            }
+        });
 
         btnTransferencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/transferir.png"))); // NOI18N
         btnTransferencia.setText("Transferência");
+        btnTransferencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransferenciaActionPerformed(evt);
+            }
+        });
 
         btnSaque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/saque.png"))); // NOI18N
         btnSaque.setText("Saque");
@@ -175,6 +187,15 @@ public class TelaCaixa extends javax.swing.JFrame {
     private void lblNomeAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblNomeAncestorAdded
         
     }//GEN-LAST:event_lblNomeAncestorAdded
+
+    private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
+        abrirTelaTransferencia();
+    }//GEN-LAST:event_btnTransferenciaActionPerformed
+
+    private void lblDeslogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDeslogarMouseClicked
+        deslogar();
+        this.dispose();
+    }//GEN-LAST:event_lblDeslogarMouseClicked
 
     /**
      * @param args the command line arguments

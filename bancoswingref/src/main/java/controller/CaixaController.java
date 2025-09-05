@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import user.Caixa;
 import user.Usuarios;
 import view.TelaCaixa;
+import view.TelaTransferencia;
 
 
 public class CaixaController {
@@ -29,7 +30,11 @@ public class CaixaController {
         tela = tela1;
     }
     
-    
+    public static void abrirTelaTransferencia(){
+        TelaTransferencia telaT = new TelaTransferencia(tela ,true);
+        telaT.setLocationRelativeTo(tela);
+        telaT.setVisible(true);
+    }
     
     
     
