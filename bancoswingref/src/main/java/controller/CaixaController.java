@@ -20,12 +20,38 @@ import view.Saque;
 import view.TelaCaixa;
 import view.TelaTransferencia;
 
+/**
+ * Controlador responsável pelo gerenciamento das operações realizadas por um Caixa.
+ * 
+ * <p>
+ * Esta classe estende {@link CaixaService} e fornece métodos estáticos para:
+ * <ul>
+ *     <li>Exibir o nome do caixa logado;</li>
+ *     <li>Abrir telas de movimentação (transferência, saque, depósito);</li>
+ *     <li>Controlar operações de transferência, depósito e saque;</li>
+ *     <li>Consultar saldo de clientes;</li>
+ *     <li>Formatar campos monetários.</li>
+ * </ul>
+ * </p>
+ * 
+ * @author Caio
+ * @version 1.0
+ * @since 2025-09-06
+ */
+
 
 public class CaixaController extends CaixaService{
-    private static Caixa caixa;
-    private static TelaCaixa tela;
-    private static Cliente cliente_origem;
-    private static Cliente cliente_destino;
+    private static Caixa caixa; /** Objeto do caixa atualmente logado */
+    private static TelaCaixa tela; /** Tela principal do caixa */
+    private static Cliente cliente_origem; /** Cliente origem da operação (transferência ou saque) */
+    private static Cliente cliente_destino; /** Cliente destino da transferência */
+    
+    /**
+     * Atualiza o JLabel com o nome do caixa logado.
+     * 
+     * @param nome JLabel que exibirá o nome do caixa
+     * @param cpf CPF do caixa logado
+     */
     
     public static void nomeCaixa(JLabel nome, String cpf){
         List<Usuarios> listaUsuarios = lerUsuarios();
@@ -40,9 +66,19 @@ public class CaixaController extends CaixaService{
         }  
     }
     
+     /**
+     * Armazena a referência da tela principal do caixa.
+     * 
+     * @param tela1 Instância da {@link TelaCaixa} a ser armazenada
+     */
+    
     public static void instanciaTelaCaixa(TelaCaixa tela1){
         tela = tela1;
     }
+    
+    /**
+     * Abre a tela de transferência centralizada em relação à tela principal do caixa.
+     */
     
     public static void abrirTelaTransferencia(){
         TelaTransferencia telaT = new TelaTransferencia(tela ,true);
@@ -50,12 +86,23 @@ public class CaixaController extends CaixaService{
         telaT.setVisible(true);
     }
     
+    /**
+     * Abre a tela de saque centralizada em relação à tela principal do caixa.
+     */
+    
     public static void abrirTelaSaque(){
         Saque saque = new Saque(tela, true);
         saque.setLocationRelativeTo(tela);
         saque.setVisible(true);
     }
     
+    /**
+     * Controla o fluxo de transferência entre clientes.
+     * 
+     * @param origem Campo com CPF do cliente origem
+     * @param destino Campo com CPF do cliente destino
+     * @param v Campo com o valor a ser transferido
+     */
     
     public static void controladorTransferencia(JFormattedTextField origem,JFormattedTextField destino, JFormattedTextField v){
         double valor = formatarValor(v.getText());
@@ -81,26 +128,47 @@ public class CaixaController extends CaixaService{
                         JOptionPane.showMessageDialog(null, "Saldo insuficiente!", "Atenção!", JOptionPane.WARNING_MESSAGE);
                     } else {
                         telaConfirmacao(tela, cpf_origem, valor, cpf_destino);
-                        //JOptionPane.showMessageDialog(null, "Transferência realizada com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }   
         }  
     }       
-           
+     
+    /**
+     * Abre a tela de depósito centralizada em relação à tela principal do caixa.
+     */
+    
     public static void abrirTelaDeposito(){
         Deposito dep = new Deposito(tela, true);
         dep.setLocationRelativeTo(tela);
         dep.setVisible(true);
     }
-   
+    
+     /**
+     * Exibe a tela de confirmação de transferência.
+     * 
+     * @param tela Tela do caixa
+     * @param cpf_origem CPF do cliente origem
+     * @param valor Valor a ser transferido
+     * @param cpfD CPF do cliente destino
+     */
+    
     protected static void telaConfirmacao(TelaCaixa tela, String cpf_origem, double valor, String cpfD){
         Confirmacao conf = new Confirmacao(tela, true, cpf_origem, valor, cpfD);
         conf.setLocationRelativeTo(tela);
         conf.setVisible(true);
         
     }
-            
+    
+    /**
+     * Confirma a transferência verificando senha e saldo.
+     * 
+     * @param cpf Campo de CPF do cliente origem
+     * @param senha Campo de senha do cliente origem
+     * @param valor Valor a ser transferido
+     * @param cpfD CPF do cliente destino
+     */
+    
     public static void confirmar(JFormattedTextField cpf, JPasswordField senha, double valor, String cpfD){
         boolean verifica = false;
         if (cliente_origem == null){
@@ -120,20 +188,33 @@ public class CaixaController extends CaixaService{
             JOptionPane.showMessageDialog(null,"Confirmação realizada com sucesso! Sua trasferência foi bem sucedida! ","Sucesso!", JOptionPane.INFORMATION_MESSAGE);
         } 
     }
-
+    
+    /**
+     * Configura um campo JFormattedTextField para entrada monetária.
+     * 
+     * @param valor Campo a ser formatado
+     */
+    
     protected static void campoMonetario(JFormattedTextField valor) {
        NumberFormat formato = NumberFormat.getNumberInstance(new Locale("pt", "BR"));
-       formato.setMaximumFractionDigits(2); // Permite duas casas decimais
-       formato.setMinimumFractionDigits(2); // Sempre exibe duas casas decimais
+       formato.setMaximumFractionDigits(2); 
+       formato.setMinimumFractionDigits(2); 
 
        NumberFormatter formatador = new NumberFormatter(formato);
        formatador.setAllowsInvalid(false);
        formatador.setOverwriteMode(true);
-       formatador.setCommitsOnValidEdit(true); // Atualiza automaticamente
+       formatador.setCommitsOnValidEdit(true); 
 
        valor.setFormatterFactory(new DefaultFormatterFactory(formatador));
        valor.setValue(0.00); 
     }
+    
+    /**
+     * Converte texto monetário em double.
+     * 
+     * @param valorTexto Texto com o valor (ex: "R$ 1.234,56")
+     * @return Valor numérico em double. Retorna 0.0 se inválido.
+     */
     
     protected static double formatarValor(String valorTexto) {
         if (valorTexto == null || valorTexto.isEmpty()) {
@@ -147,6 +228,13 @@ public class CaixaController extends CaixaService{
             return 0.0;
         }
     }
+    
+    /**
+     * Controla o fluxo de depósito para um cliente.
+     * 
+     * @param txtCPF Campo com CPF do cliente
+     * @param txtValor Campo com o valor do depósito
+     */
     
     public static void controladorDeposito(JFormattedTextField txtCPF, JFormattedTextField  txtValor){
         double valor = formatarValor(txtValor.getText());
@@ -162,6 +250,14 @@ public class CaixaController extends CaixaService{
             JOptionPane.showMessageDialog(null, "Depósito registrado com sucesso!", "Depósito bem sucedido!", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+    
+    /**
+     * Controla o fluxo de saque de um cliente.
+     * 
+     * @param txtCPF Campo com CPF do cliente
+     * @param txtSenha Campo com senha do cliente
+     * @param txtValor Campo com valor a ser sacado
+     */
     
     public static void controladorSaque(JFormattedTextField txtCPF, JPasswordField txtSenha , JFormattedTextField  txtValor){
         if(txtCPF.getText() == null || txtSenha.getPassword().length == 0 || txtValor.getText() == null){
@@ -197,6 +293,13 @@ public class CaixaController extends CaixaService{
             }  
         }
     }
+    
+    /**
+     * Consulta o saldo de um cliente e atualiza JLabel.
+     * 
+     * @param lblSaldo JLabel que exibirá o saldo
+     * @param txtCPF Campo com CPF do cliente
+     */
     
     public static void consultarSaldo(JLabel lblSaldo,JFormattedTextField txtCPF){
         if(txtCPF.getText() == null ){

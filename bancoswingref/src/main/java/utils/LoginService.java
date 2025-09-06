@@ -8,9 +8,32 @@ import user.Usuarios;
 import view.TelaCaixa;
 import view.TelaCliente;
 
+/**
+ * Serviço de login para autenticação e abertura de telas de usuários.
+ * <p>
+ * Esta classe fornece métodos para validar login, verificar campos vazios
+ * e abrir a tela correspondente ao tipo do usuário (Cliente ou Caixa).
+ * Métodos são estáticos e a classe não pode ser instanciada.
+ * </p>
+ * 
+ * @author Caio
+ * @version 1.0
+ */
+
 public class LoginService {
     
-    protected LoginService(){}; // Evitar instaciar 
+    /**
+     * Construtor protegido para evitar instanciação direta da classe.
+     */
+    protected LoginService(){}; 
+    
+     /**
+     * Valida as credenciais de login comparando CPF e senha.
+     *
+     * @param cpfDigitado O CPF digitado pelo usuário.
+     * @param senhaDigitada A senha digitada pelo usuário.
+     * @return true se o login for válido, false caso contrário.
+     */
     
     protected static boolean autenticadorLogin(String cpfDigitado, String senhaDigitada){ 
         boolean loginValido = false;
@@ -26,6 +49,12 @@ public class LoginService {
         } 
         return loginValido;      
     }
+    
+    /**
+     * Realiza o login de um usuário, abrindo a tela correspondente ao tipo.
+     *
+     * @param cpf CPF do usuário que realizou login.
+     */
     
     protected static void logar(String cpf){
         List<Usuarios> listaUsuarios = lerUsuarios();
@@ -44,6 +73,12 @@ public class LoginService {
         }
     }
     
+    /**
+     * Abre a tela do Caixa.
+     *
+     * @param cpf CPF do usuário do tipo Caixa.
+     */
+    
     private static void telaCaixa(String cpf){
         TelaCaixa tela = new TelaCaixa(cpf);
         tela.setLocationRelativeTo(null);
@@ -51,12 +86,26 @@ public class LoginService {
         instanciaTelaCaixa(tela);
     }
     
+    /**
+     * Abre a tela do Cliente.
+     *
+     * @param cpf CPF do usuário do tipo Cliente.
+     */
+    
     private static void telaCliente(String cpf){
         TelaCliente tela = new TelaCliente(cpf);
         tela.setLocationRelativeTo(null);
         tela.setVisible(true);
         instaciaTelaCliente(tela);
     }
+    
+    /**
+     * Verifica se o CPF ou senha estão vazios.
+     *
+     * @param cpfDigitado CPF digitado.
+     * @param senhaDigitada Senha digitada.
+     * @return true se algum campo estiver vazio, false caso contrário.
+     */
     
     public static boolean verificarVazio(String cpfDigitado, String senhaDigitada){
         if(cpfDigitado.trim().isEmpty() || senhaDigitada.length() == 0){

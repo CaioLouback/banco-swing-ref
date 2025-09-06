@@ -21,9 +21,37 @@ import view.Login;
 import view.TelaCliente;
 
 
+/**
+ * Controlador responsável pelo gerenciamento das operações do cliente.
+ * 
+ * <p>
+ * Esta classe fornece métodos estáticos para:
+ * <ul>
+ *     <li>Exibir informações do cliente (nome, saldo);</li>
+ *     <li>Abrir telas de crédito e extrato;</li>
+ *     <li>Gerenciar termos de empréstimo;</li>
+ *     <li>Controlar solicitações de crédito;</li>
+ *     <li>Deslogar o cliente;</li>
+ *     <li>Atualizar valores e campos relacionados a sliders e checkboxes.</li>
+ * </ul>
+ * </p>
+ * 
+ * @author Caio
+ * @version 1.0
+ * @since 2025-09-06
+ */
+
 public class ClienteController{
-    private static Cliente cliente;
-    private static TelaCliente tela;
+    private static Cliente cliente; /** Cliente atualmente logado */
+    private static TelaCliente tela; /** Tela principal do cliente */
+    
+    /**
+     * Exibe informações do cliente (nome e saldo) em labels.
+     * 
+     * @param cpf CPF do cliente
+     * @param nomeCliente JLabel que exibirá o nome do cliente
+     * @param saldo JLabel que exibirá o saldo do cliente
+     */
     
     public static void mostrarInfoCliente(String cpf, JLabel nomeCliente, JLabel saldo){
         List<Usuarios> listaUsuarios = lerUsuarios();
@@ -40,6 +68,13 @@ public class ClienteController{
         }
     }
     
+    /**
+     * Mostra ou oculta o saldo do cliente conforme o estado do checkbox.
+     * 
+     * @param saldo JLabel do saldo
+     * @param checkBoxSaldo JCheckBox para mostrar/ocultar saldo
+     */
+    
     public static void mostrarSaldoCliente(JLabel saldo, JCheckBox checkBoxSaldo){
         if (checkBoxSaldo.isSelected()) {
             saldo.setIcon(null);
@@ -50,15 +85,29 @@ public class ClienteController{
         }
     }
     
+    /**
+     * Desloga o cliente e abre a tela de login.
+     */
+    
     public static void deslogar(){
         Login login = new Login();
         login.setVisible(true);
         login.setLocationRelativeTo(null);
     }
     
+    /**
+     * Armazena a referência da tela principal do cliente.
+     * 
+     * @param tela1 Instância da {@link TelaCliente} a ser armazenada
+     */
+    
     public static void instaciaTelaCliente(TelaCliente tela1){
         tela = tela1;
     }
+    
+    /**
+     * Abre a tela de solicitação de crédito.
+     */
     
     public static void telaCredito(){
         //String cpf = cliente.getCPF();
@@ -67,17 +116,34 @@ public class ClienteController{
         telaCredito.setVisible(true);   
     }
     
+    /**
+     * Abre a tela de extrato bancário.
+     */
+    
     public static void telaExtrato(){
         Extrato telaExtrato = new Extrato(tela,true);
         telaExtrato.setLocationRelativeTo(tela);
         telaExtrato.setVisible(true);
     }
     
+    /**
+     * Carrega o extrato do cliente e exibe em um JTextArea.
+     * 
+     * @param area JTextArea onde o extrato será exibido
+     */
+    
     public static void mostrarExtrato(JTextArea area){
         String extrato = Json.obterExtrato(cliente.getCPF());
         System.out.println("Extrato carregado: " + extrato);  
         area.setText(extrato);
     }
+    
+    /**
+     * Atualiza o painel de termos de crédito de acordo com o valor do slider.
+     * 
+     * @param slider JSlider com o valor do empréstimo
+     * @param painel JTextPane que exibirá os termos
+     */
     
     public static void termos(JSlider slider, JTextPane painel){
         int valor = slider.getValue();  
@@ -114,14 +180,35 @@ public class ClienteController{
         painel.setText(termoFormatado);
     }
     
+    /**
+     * Atualiza o valor do JLabel e os termos do crédito conforme o slider.
+     * 
+     * @param lbl JLabel que exibirá o valor
+     * @param slider JSlider com o valor do empréstimo
+     * @param painel JTextPane com os termos
+     */
+    
     public  static void setValor(JLabel lbl, JSlider slider, JTextPane painel){
         lbl.setText(String.valueOf(slider.getValue()));
         termos(slider, painel);
     }
     
+    /**
+     * Habilita ou desabilita o botão de solicitação de crédito conforme o checkbox.
+     * 
+     * @param btnSolicitar JButton para solicitar crédito
+     * @param checkAceito JCheckBox indicando se o cliente aceitou os termos
+     */
+    
     public static void setTermos(JButton btnSolicitar, JCheckBox checkAceito){
         btnSolicitar.setEnabled(checkAceito.isSelected());
     }
+    
+    /**
+     * Solicita crédito para o cliente de acordo com o valor do slider.
+     * 
+     * @param slider JSlider com o valor do crédito solicitado
+     */
     
     public static void solicitarCredito(JSlider slider){
         double valor = slider.getValue(); 

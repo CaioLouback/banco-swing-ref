@@ -4,16 +4,40 @@ import java.text.ParseException;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
-// Aluno Caio Louback  matrícula 202335032
+/**
+ * Classe responsável por validação e formatação de CPF.
+ * <p>
+ * Funcionalidades incluem:
+ * <ul>
+ *   <li>Validação de CPF (dígitos verificadores);</li>
+ *   <li>Formatação com ou sem máscara;</li>
+ *   <li>Fornecimento de máscara pronta para JTextField.</li>
+ * </ul>
+ * 
+ * <p><b>Observação:</b> Esta classe foi retirada de um repositório no GitHub,
+ * porém o link original não pôde ser recuperado.</p>
+ */
+
 public class Formatacao {
     private String cpf;
     private static final String Formato = "###.###.###-##";
+    
+    /**
+     * Construtor que recebe o CPF como String e o armazena limpo (sem máscara).
+     * 
+     * @param C CPF a ser formatado e armazenado
+     */
     
     public Formatacao(String C) {
         this.cpf = this.Format(C,false);
     }
     
-    //Vefirica se é um cpf válido
+    /**
+     * Verifica se o CPF armazenado é válido de acordo com os dígitos verificadores.
+     * 
+     * @return true se o CPF for válido; false caso contrário
+     */
+  
     public boolean isCPF(){
         
         if (this.cpf.equals("00000000000") || 
@@ -68,12 +92,27 @@ public class Formatacao {
             return(false); 
         } 
     }
-
+    
+    /**
+     * Retorna o CPF com ou sem máscara.
+     * 
+     * @param Mascara true para retorno com máscara; false para sem máscara
+     * @return CPF formatado
+     */
+    
     public String getCPF(boolean Mascara) {
         return Format(this.cpf,Mascara);
     }
     
-    //Formatação do cpf para retorno
+    /**
+     * Formata o CPF para máscara ou limpa caracteres especiais.
+     * 
+     * @param C CPF a ser formatado
+     * @param Mascara true para adicionar máscara; false para limpar
+     * @return CPF formatado ou limpo
+     */
+    
+    
     private String Format(String C, boolean Mascara){
         if(Mascara){
             return(C.substring(0, 3) + "." + C.substring(3, 6) + "." +
@@ -84,7 +123,13 @@ public class Formatacao {
             return C;
         }
     }
-
+    
+    /**
+     * Retorna um DefaultFormatterFactory com a máscara de CPF pronta para uso em JTextField.
+     * 
+     * @return DefaultFormatterFactory para campo de CPF, ou null em caso de erro
+     */
+    
     public static DefaultFormatterFactory getFormat(){
         try {
             return new DefaultFormatterFactory(new MaskFormatter(Formato));
