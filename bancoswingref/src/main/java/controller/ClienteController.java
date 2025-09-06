@@ -15,14 +15,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import user.Cliente;
 import user.Usuarios;
-import utils.ClienteService;
 import view.Credito;
 import view.Extrato;
 import view.Login;
 import view.TelaCliente;
 
 
-public class ClienteController extends ClienteService{
+public class ClienteController{
     private static Cliente cliente;
     private static TelaCliente tela;
     
@@ -40,9 +39,6 @@ public class ClienteController extends ClienteService{
             }      
         }
     }
-    
-    
-    
     
     public static void mostrarSaldoCliente(JLabel saldo, JCheckBox checkBoxSaldo){
         if (checkBoxSaldo.isSelected()) {

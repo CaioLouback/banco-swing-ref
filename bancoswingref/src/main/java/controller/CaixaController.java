@@ -163,7 +163,6 @@ public class CaixaController extends CaixaService{
         }
     }
     
-    
     public static void controladorSaque(JFormattedTextField txtCPF, JPasswordField txtSenha , JFormattedTextField  txtValor){
         if(txtCPF.getText() == null || txtSenha.getPassword().length == 0 || txtValor.getText() == null){
             JOptionPane.showMessageDialog(null, "Favor preencher corretamente todos os campos!", "Atenção!", JOptionPane.WARNING_MESSAGE);
@@ -181,8 +180,13 @@ public class CaixaController extends CaixaService{
                     } else {
                         boolean s = cliente.verificarSenha(senha);
                         if(cliente.getCPF().equals(cpf) && s == true){
-                            sacar(cliente, valor);
-                            JOptionPane.showMessageDialog(null, "Saque realizado com sucesso!", "Saque bem sucedido!", JOptionPane.INFORMATION_MESSAGE);
+                            if(valor > 1000000){
+                                JOptionPane.showMessageDialog(null, "Solicitação Realizada! Basta aguardar o seu gerente liberar o saque!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+                                
+                            } else {
+                                sacar(cliente, valor);
+                                JOptionPane.showMessageDialog(null, "Saque realizado com sucesso!", "Saque bem sucedido!", JOptionPane.INFORMATION_MESSAGE);
+                            } 
                         } else {
                             JOptionPane.showMessageDialog(null,"Login ou senha estão incorretos!", "Atenção!", JOptionPane.WARNING_MESSAGE);
                         }  

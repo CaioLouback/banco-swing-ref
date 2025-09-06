@@ -17,6 +17,7 @@ import java.util.Map;
 import user.Caixa;
 import user.Cliente;
 import user.Gerente;
+import utils.Movimentacao;
 
 
 
@@ -25,6 +26,7 @@ public class Json {
     private static final String CAMINHO_ARQUIVO = PASTA_BANCO + "/usuarios.json";
     private static final String CAMINHO_CREDITO = PASTA_BANCO + "/credito.json";
     private static final String CAMINHO_EXTRATO = PASTA_BANCO + "/extrato.json";
+    private static String CAMINHO_SAQUE = PASTA_BANCO + "/saque.json";
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     
     private Json(){};
@@ -151,41 +153,40 @@ public class Json {
     }
          
     public static void registrarMovimentacoes(String cpf, String tipo, double valor) {
-        File arq = new File(CAMINHO_EXTRATO);
-        Map<String, List<Map<String, Object>>> extrato;
+        // Cada cliente terá seu próprio JSON separado
+        String caminho = System.getProperty("user.home") + "/bancoswingref/extratos/" + cpf + "_extrato.json";
+        File arq = new File(caminho);
+
+        // Garante que a pasta exista
+        File pasta = arq.getParentFile();
+        if (pasta != null && !pasta.exists()) {
+            pasta.mkdirs();
+        }
+
+        List<Movimentacao> movimentacoes;
 
         try {
-            
+            // Se já existe, lê
             if (arq.exists()) {
                 try (FileReader reader = new FileReader(arq)) {
-                    Type mapType = new TypeToken<Map<String, List<Map<String, Object>>>>() {
+                    Type listType = new TypeToken<List<Movimentacao>>() {
                     }.getType();
-                    extrato = gson.fromJson(reader, mapType);
+                    movimentacoes = gson.fromJson(reader, listType);
 
-                    if (extrato == null) {
-                        extrato = new HashMap<>();
+                    if (movimentacoes == null) {
+                        movimentacoes = new ArrayList<>();
                     }
                 }
             } else {
-                extrato = new HashMap<>();
+                movimentacoes = new ArrayList<>();
             }
 
-            
-            List<Map<String, Object>> movimentacoes = extrato.getOrDefault(cpf, new ArrayList<>());
+            // Adiciona nova movimentação
+            movimentacoes.add(new Movimentacao(tipo, valor));
 
-            
-            Map<String, Object> mov = new HashMap<>();
-            mov.put("tipo", tipo);
-            mov.put("valor", valor);
-
-            movimentacoes.add(mov);
-
-            
-            extrato.put(cpf, movimentacoes);
-
-            
+            // Salva no arquivo JSON
             try (FileWriter writer = new FileWriter(arq)) {
-                gson.toJson(extrato, writer);
+                gson.toJson(movimentacoes, writer);
             }
 
         } catch (IOException e) {
@@ -194,17 +195,18 @@ public class Json {
     }
         
         
-    public static List<Cliente> lerExtrato(String cpf) {
-        File arq = new File(CAMINHO_CREDITO);
+    public static List<Movimentacao> lerExtrato(String cpf) {
+        String caminho = System.getProperty("user.home") + "/bancoswingref/extratos/" + cpf + "_extrato.json";
+        File arq = new File(caminho);
 
         if (!arq.exists()) {
             return new ArrayList<>();
         }
 
         try (FileReader reader = new FileReader(arq)) {
-            Type listType = new TypeToken<List<Cliente>>() {
+            Type listType = new TypeToken<List<Movimentacao>>() {
             }.getType();
-            List<Cliente> lista = gson.fromJson(reader, listType);
+            List<Movimentacao> lista = gson.fromJson(reader, listType);
 
             if (lista == null) {
                 lista = new ArrayList<>();
@@ -217,37 +219,24 @@ public class Json {
     }
     
     public static String obterExtrato(String cpf) {
-        File arq = new File(CAMINHO_EXTRATO);
-        if (!arq.exists()) {
+        List<Movimentacao> lista = lerExtrato(cpf);
+
+        if (lista.isEmpty()) {
             return "Nenhuma movimentação encontrada.";
         }
 
-        try (FileReader reader = new FileReader(arq)) {
-            Type mapType = new TypeToken<Map<String, List<Map<String, Object>>>>() {
-            }.getType();
-            Map<String, List<Map<String, Object>>> extrato = gson.fromJson(reader, mapType);
+        StringBuilder sb = new StringBuilder();
+        sb.append("=== Extrato de Movimentações ===\n\n");
 
-            if (extrato == null || !extrato.containsKey(cpf) || extrato.get(cpf).isEmpty()) {
-                return "Nenhuma movimentação encontrada.";
-            }
-
-            StringBuilder sb = new StringBuilder();
-            sb.append("=== Extrato de Movimentações ===\n\n");
-
-            List<Map<String, Object>> movimentacoes = extrato.get(cpf);
-            for (Map<String, Object> mov : movimentacoes) {
-                sb.append("Tipo: ").append(mov.get("tipo")).append("\n");
-                sb.append("Valor: R$ ").append(mov.get("valor")).append("\n");
-                sb.append("-----------------------------\n");
-            }
-
-            return sb.toString();
-
-        } catch (IOException e) {
-            return "Erro ao ler o extrato: " + e.getMessage();
+        for (Movimentacao mov : lista) {
+            sb.append("Tipo: ").append(mov.getTipo()).append("\n");
+            sb.append("Valor: R$ ").append(mov.getValor()).append("\n");
+            sb.append("-----------------------------\n");
         }
+
+        return sb.toString();
     }
 
- 
+   
     
 }
