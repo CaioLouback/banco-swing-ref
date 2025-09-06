@@ -17,8 +17,13 @@ public class CaixaService{
         saldoDestino += valor;
         cliente_destino.setSaldo(saldoDestino);
         atualizarSaldo(cliente_origem);
-        atualizarSaldo(cliente_destino);
-        
+        atualizarSaldo(cliente_destino);   
+    }
+    
+    protected static void sacar(Cliente cliente, double valor){
+        double saldo = cliente.getSaldo() - valor;
+        cliente.setSaldo(saldo);
+        atualizarSaldo(cliente);
     }
     
     protected static Cliente retornaCliente(String cpf) {

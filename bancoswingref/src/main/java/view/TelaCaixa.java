@@ -5,6 +5,7 @@
 package view;
 
 import static controller.CaixaController.abrirTelaDeposito;
+import static controller.CaixaController.abrirTelaSaque;
 import static controller.CaixaController.abrirTelaTransferencia;
 import static controller.CaixaController.nomeCaixa;
 import static controller.ClienteController.deslogar;
@@ -91,6 +92,11 @@ public class TelaCaixa extends javax.swing.JFrame {
 
         btnSaque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/saque.png"))); // NOI18N
         btnSaque.setText("Saque");
+        btnSaque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaqueActionPerformed(evt);
+            }
+        });
 
         btnDeposito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/deposito.png"))); // NOI18N
         btnDeposito.setText("Depósito");
@@ -206,6 +212,10 @@ public class TelaCaixa extends javax.swing.JFrame {
     private void btnDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositoActionPerformed
         abrirTelaDeposito();
     }//GEN-LAST:event_btnDepositoActionPerformed
+
+    private void btnSaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaqueActionPerformed
+        abrirTelaSaque();
+    }//GEN-LAST:event_btnSaqueActionPerformed
 
     /**
      * @param args the command line arguments

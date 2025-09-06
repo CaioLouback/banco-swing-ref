@@ -16,6 +16,7 @@ import user.Usuarios;
 import utils.CaixaService;
 import view.Confirmacao;
 import view.Deposito;
+import view.Saque;
 import view.TelaCaixa;
 import view.TelaTransferencia;
 
@@ -48,6 +49,13 @@ public class CaixaController extends CaixaService{
         telaT.setLocationRelativeTo(tela);
         telaT.setVisible(true);
     }
+    
+    public static void abrirTelaSaque(){
+        Saque saque = new Saque(tela, true);
+        saque.setLocationRelativeTo(tela);
+        saque.setVisible(true);
+    }
+    
     
     public static void controladorTransferencia(JFormattedTextField origem,JFormattedTextField destino, JFormattedTextField v){
         double valor = formatarValor(v.getText());
@@ -85,9 +93,7 @@ public class CaixaController extends CaixaService{
         dep.setLocationRelativeTo(tela);
         dep.setVisible(true);
     }
-    
-
-    
+   
     protected static void telaConfirmacao(TelaCaixa tela, String cpf_origem, double valor, String cpfD){
         Confirmacao conf = new Confirmacao(tela, true, cpf_origem, valor, cpfD);
         conf.setLocationRelativeTo(tela);
@@ -129,7 +135,6 @@ public class CaixaController extends CaixaService{
        valor.setValue(0.00); 
     }
     
-    
     protected static double formatarValor(String valorTexto) {
         if (valorTexto == null || valorTexto.isEmpty()) {
             return 0.0;
@@ -158,6 +163,50 @@ public class CaixaController extends CaixaService{
         }
     }
     
+    
+    public static void controladorSaque(JFormattedTextField txtCPF, JPasswordField txtSenha , JFormattedTextField  txtValor){
+        if(txtCPF.getText() == null || txtSenha.getPassword().length == 0 || txtValor.getText() == null){
+            JOptionPane.showMessageDialog(null, "Favor preencher corretamente todos os campos!", "Atenção!", JOptionPane.WARNING_MESSAGE);
+        } else{
+            String cpf = txtCPF.getText();
+            String senha = new String(txtSenha.getPassword());
+            double valor = formatarValor(txtValor.getText());
+            if(valor < 0){
+                JOptionPane.showMessageDialog(null, "VALOR NEGATIVO NÃO SÃO ACEITOS!", "ERROR!", JOptionPane.ERROR_MESSAGE);
+            } else {
+                Cliente cliente = retornaCliente(cpf);
+                if(cliente != null){
+                    if(cliente.getSaldo() < valor){
+                        JOptionPane.showMessageDialog(null, "Saldo insuficiente!", "Atenção!", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        boolean s = cliente.verificarSenha(senha);
+                        if(cliente.getCPF().equals(cpf) && s == true){
+                            sacar(cliente, valor);
+                            JOptionPane.showMessageDialog(null, "Saque realizado com sucesso!", "Saque bem sucedido!", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null,"Login ou senha estão incorretos!", "Atenção!", JOptionPane.WARNING_MESSAGE);
+                        }  
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "CPF não é cadastrado no bancoo.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }  
+        }
+    }
+    
+    public static void consultarSaldo(JLabel lblSaldo,JFormattedTextField txtCPF){
+        if(txtCPF.getText() == null ){
+            JOptionPane.showMessageDialog(null, "Favor preencher corretamente o campo referente ao CPF!", "Atenção!", JOptionPane.WARNING_MESSAGE);
+        }
+        String cpf = txtCPF.getText();
+        Cliente cliente = retornaCliente(cpf);
+        if(cliente == null){
+            JOptionPane.showMessageDialog(null, "CPF não é cadastrado no bancoo.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } else{
+            NumberFormat formato = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+            lblSaldo.setText(formato.format(cliente.getSaldo()));
+        } 
+    }
     
     
     

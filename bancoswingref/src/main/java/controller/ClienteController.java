@@ -41,6 +41,9 @@ public class ClienteController extends ClienteService{
         }
     }
     
+    
+    
+    
     public static void mostrarSaldoCliente(JLabel saldo, JCheckBox checkBoxSaldo){
         if (checkBoxSaldo.isSelected()) {
             saldo.setIcon(null);

@@ -51,14 +51,12 @@ public class LoginService {
         instanciaTelaCaixa(tela);
     }
     
-    
     private static void telaCliente(String cpf){
         TelaCliente tela = new TelaCliente(cpf);
         tela.setLocationRelativeTo(null);
         tela.setVisible(true);
         instaciaTelaCliente(tela);
     }
-    
     
     public static boolean verificarVazio(String cpfDigitado, String senhaDigitada){
         if(cpfDigitado.trim().isEmpty() || senhaDigitada.length() == 0){

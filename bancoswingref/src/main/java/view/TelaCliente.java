@@ -4,6 +4,7 @@
  */
 package view;
 
+import static controller.CaixaController.abrirTelaTransferencia;
 import static controller.ClienteController.deslogar;
 import static controller.ClienteController.mostrarInfoCliente;
 import static controller.ClienteController.mostrarSaldoCliente;
@@ -128,6 +129,11 @@ public class TelaCliente extends javax.swing.JFrame {
 
         btnTransferencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/transferir.png"))); // NOI18N
         btnTransferencia.setText("Transferência");
+        btnTransferencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransferenciaActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Solicitações");
 
@@ -218,6 +224,10 @@ public class TelaCliente extends javax.swing.JFrame {
     private void menuExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtratoActionPerformed
         telaExtrato();
     }//GEN-LAST:event_menuExtratoActionPerformed
+
+    private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
+        abrirTelaTransferencia();
+    }//GEN-LAST:event_btnTransferenciaActionPerformed
 
     /**
      * @param args the command line arguments
