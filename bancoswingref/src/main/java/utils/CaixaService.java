@@ -2,6 +2,7 @@ package utils;
 
 import static dao.Json.atualizarSaldo;
 import static dao.Json.lerUsuarios;
+import static dao.Json.registrarMovimentacoes;
 import java.util.List;
 import user.Cliente;
 import user.Usuarios;
@@ -17,13 +18,16 @@ public class CaixaService{
         saldoDestino += valor;
         cliente_destino.setSaldo(saldoDestino);
         atualizarSaldo(cliente_origem);
-        atualizarSaldo(cliente_destino);   
+        atualizarSaldo(cliente_destino);
+        registrarMovimentacoes(cliente_origem.getCPF(), "Transferência (-)", valor);
+        registrarMovimentacoes(cliente_destino.getCPF(), "Transferência (+)", valor);
     }
     
     protected static void sacar(Cliente cliente, double valor){
         double saldo = cliente.getSaldo() - valor;
         cliente.setSaldo(saldo);
         atualizarSaldo(cliente);
+        registrarMovimentacoes(cliente.getCPF(), "Saque (-)", valor);
     }
     
     protected static Cliente retornaCliente(String cpf) {
@@ -73,6 +77,7 @@ public class CaixaService{
         saldo += valor;
         cliente.setSaldo(saldo);
         atualizarSaldo(cliente);
+        registrarMovimentacoes(cliente.getCPF(), "Depósito (+)", valor);
         return true;
     }
    

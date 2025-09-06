@@ -10,10 +10,10 @@ import com.google.gson.reflect.TypeToken;
 import user.Usuarios;
 import java.io.*;
 import java.lang.reflect.Type;
-
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import user.Caixa;
 import user.Cliente;
 import user.Gerente;
@@ -114,7 +114,7 @@ public class Json {
         }
     }
     
-    public static boolean credito(Cliente cliente, double valor) {
+        public static boolean credito(Cliente cliente, double valor) {
         File arq = new File(CAMINHO_CREDITO);
 
         // se não existir, cria um arquivo vazio
@@ -148,8 +148,52 @@ public class Json {
         } catch (IOException e) {
             return false;
         }
-}
+    }
+         
+    public static void registrarMovimentacoes(String cpf, String tipo, double valor) {
+        File arq = new File(CAMINHO_EXTRATO);
+        Map<String, List<Map<String, Object>>> extrato;
+
+        try {
             
+            if (arq.exists()) {
+                try (FileReader reader = new FileReader(arq)) {
+                    Type mapType = new TypeToken<Map<String, List<Map<String, Object>>>>() {
+                    }.getType();
+                    extrato = gson.fromJson(reader, mapType);
+
+                    if (extrato == null) {
+                        extrato = new HashMap<>();
+                    }
+                }
+            } else {
+                extrato = new HashMap<>();
+            }
+
+            
+            List<Map<String, Object>> movimentacoes = extrato.getOrDefault(cpf, new ArrayList<>());
+
+            
+            Map<String, Object> mov = new HashMap<>();
+            mov.put("tipo", tipo);
+            mov.put("valor", valor);
+
+            movimentacoes.add(mov);
+
+            
+            extrato.put(cpf, movimentacoes);
+
+            
+            try (FileWriter writer = new FileWriter(arq)) {
+                gson.toJson(extrato, writer);
+            }
+
+        } catch (IOException e) {
+            System.err.println("Erro ao registrar movimentação: " + e.getMessage());
+        }
+    }
+        
+        
     public static List<Cliente> lerExtrato(String cpf) {
         File arq = new File(CAMINHO_CREDITO);
 
@@ -170,26 +214,38 @@ public class Json {
         } catch (IOException e) {
             return new ArrayList<>();
         }
-}
+    }
     
     public static String obterExtrato(String cpf) {
-        List<Cliente> lista = lerExtrato(cpf);
-
-        if (lista.isEmpty()) {
+        File arq = new File(CAMINHO_EXTRATO);
+        if (!arq.exists()) {
             return "Nenhuma movimentação encontrada.";
         }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("=== Extrato de Créditos ===\n\n");
+        try (FileReader reader = new FileReader(arq)) {
+            Type mapType = new TypeToken<Map<String, List<Map<String, Object>>>>() {
+            }.getType();
+            Map<String, List<Map<String, Object>>> extrato = gson.fromJson(reader, mapType);
 
-        for (Cliente c : lista) {
-            sb.append("Nome: ").append(c.getNome()).append("\n");
-            sb.append("CPF: ").append(c.getCPF()).append("\n");
-            sb.append("Valor do Crédito: R$ ").append(c.getValorCredito()).append("\n");
-            sb.append("-----------------------------\n");
+            if (extrato == null || !extrato.containsKey(cpf) || extrato.get(cpf).isEmpty()) {
+                return "Nenhuma movimentação encontrada.";
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("=== Extrato de Movimentações ===\n\n");
+
+            List<Map<String, Object>> movimentacoes = extrato.get(cpf);
+            for (Map<String, Object> mov : movimentacoes) {
+                sb.append("Tipo: ").append(mov.get("tipo")).append("\n");
+                sb.append("Valor: R$ ").append(mov.get("valor")).append("\n");
+                sb.append("-----------------------------\n");
+            }
+
+            return sb.toString();
+
+        } catch (IOException e) {
+            return "Erro ao ler o extrato: " + e.getMessage();
         }
-
-        return sb.toString();
     }
 
  

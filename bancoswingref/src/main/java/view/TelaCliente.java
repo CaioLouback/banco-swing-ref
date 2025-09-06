@@ -54,7 +54,6 @@ public class TelaCliente extends javax.swing.JFrame {
         lblTituloSaldo = new javax.swing.JLabel();
         lblSaldo = new javax.swing.JLabel();
         checkBoxSaldo = new javax.swing.JCheckBox();
-        btnTransferencia = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuCredito = new javax.swing.JMenuItem();
@@ -127,14 +126,6 @@ public class TelaCliente extends javax.swing.JFrame {
             }
         });
 
-        btnTransferencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/transferir.png"))); // NOI18N
-        btnTransferencia.setText("Transferência");
-        btnTransferencia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTransferenciaActionPerformed(evt);
-            }
-        });
-
         jMenu1.setText("Solicitações");
 
         menuCredito.setText("Solicitação de Crédito");
@@ -169,22 +160,16 @@ public class TelaCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(painel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(painel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(46, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
+                        .addGap(203, 203, 203)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(checkBoxSaldo)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblTituloSaldo)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnTransferencia)
-                                .addGap(101, 101, 101))))))
+                                .addGap(28, 28, 28)
+                                .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(checkBoxSaldo))))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,9 +179,8 @@ public class TelaCliente extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTituloSaldo)
-                    .addComponent(lblSaldo)
-                    .addComponent(btnTransferencia))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(lblSaldo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(checkBoxSaldo)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
@@ -224,10 +208,6 @@ public class TelaCliente extends javax.swing.JFrame {
     private void menuExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExtratoActionPerformed
         telaExtrato();
     }//GEN-LAST:event_menuExtratoActionPerformed
-
-    private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
-        abrirTelaTransferencia();
-    }//GEN-LAST:event_btnTransferenciaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -265,7 +245,6 @@ public class TelaCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnTransferencia;
     private javax.swing.JCheckBox checkBoxSaldo;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
